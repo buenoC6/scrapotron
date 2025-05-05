@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bot Vinted - Nintendo DS</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        h1 { margin-bottom: 20px; }
+        .item { margin-bottom: 15px; }
+        a { text-decoration: none; color: blue; }
+    </style>
+</head>
+<body>
+<h1>Nouveaux articles Vinted : Nintendo DS</h1>
+<div id="items"></div>
+
+<script>
+    async function fetchItems() {
+        const res = await fetch('/api/items');
+        const items = await res.json();
+        const container = document.getElementById('items');
+        container.innerHTML = '';
+        items.forEach(item => {
+            const el = document.createElement('div');
+            el.className = 'item';
+            el.innerHTML = `<a href="${item.url}" target="_blank">${item.title} - ${item.price} €</a>`;
+            container.appendChild(el);
+        });
+    }
+
+    setInterval(fetchItems, 5000);
+    fetchItems();
+</script>
+</body>
+</html>
